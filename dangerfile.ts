@@ -102,13 +102,8 @@ function doesLineHaveProhibitedOverride(disablingString) {
   // disablingStringParts format: ['eslint-disable-next-line', 'no-jsx', 'no-default']
 
   if (disablingStringParts.length === 1) {
-    if (disablingStringParts[0] === 'eslint-disable') {
-      prohibitedOverrideMsg =
-        'Found `eslint-disable`. This disables eslint for the whole file, which is bad practice because it can allow security issues to slip in unnoticed. Please specify exact rules on a line by line basis, eg `eslint-disable-next-line no-underscore-dangle`.';
-    } else {
-      // fail because rule should be specified
-      prohibitedOverrideMsg = 'Must specify the rule you are disabling';
-    }
+    // fail because rule should be specified
+    prohibitedOverrideMsg = 'Must specify the rule you are disabling';
     return prohibitedOverrideMsg;
   }
 
@@ -150,7 +145,6 @@ function checkPRHasProhibitedLinterOverride(dangerJSDiffCollection) {
         let lineParts = line.split('//');
         if (lineParts.length === 1) {
           lineParts = line.split('/*');
-          console.log('line parts', lineParts)
           if (lineParts.length === 1) {
             throw new Error('uhhhh, how did we find eslint disable but no // or /*');
           }
